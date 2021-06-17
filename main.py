@@ -1,4 +1,4 @@
-#import libraries
+# import libraries
 import cv2
 import os
 import datetime
@@ -49,7 +49,10 @@ count = 0
 image_location = 'E:/L4S1/research/Develop/OutputImg'
 new_image_name = image_location + date_time
 
-# frame
+# creating directory to save video fragments
+path = os.path.join(image_location, date_time)
+os.mkdir(path)
+
 currentframe = 0
 
 while (True):
@@ -61,13 +64,11 @@ while (True):
         # if video is still left continue creating images
         name = date_time + '_' + str(currentframe) + '.jpg'
         location = image_location + name
-        print('Creating...' + name)
+        # print('Creating...' + name)
 
         # writing the extracted images
-        cv2.imwrite(os.path.join(image_location, name), framei)
+        cv2.imwrite(os.path.join(path, name), framei)
 
-        # increasing counter so that it will
-        # show how many frames are created
         currentframe += 1
     else:
         break
