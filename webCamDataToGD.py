@@ -1,7 +1,13 @@
 # import libraries
+import time
+
 import cv2
 import os
 import datetime
+
+from googleapiclient.http import MediaFileUpload
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
 
 # Determine filename by timestamp
 current_date_and_time = datetime.datetime.now().timestamp()
@@ -25,7 +31,7 @@ while (True):
     ret, frame = vid.read()
 
     # Display the resulting frame
-    ims = cv2.resize(frame, (120, 100))
+    ims = cv2.resize(frame, (100, 100))
     cv2.imshow('frame', ims)
     videoWriter.write(frame)
 
@@ -77,3 +83,35 @@ while (True):
 # Release all space and windows once done
 cap.release()
 cv2.destroyAllWindows()
+
+####
+gauth = GoogleAuth()
+
+# Creates local webserver and auto handles authentication.
+gauth.LocalWebserverAuth()
+
+drive = GoogleDrive(gauth)
+
+# vid_name = date_time + '.avi'
+#
+# for vid_name in os.listdir(filepath):
+#     f = drive.CreateFile({'title': vid_name})
+#     f.SetContentFile(os.path.join(filepath, vid_name))
+#     f.Upload()
+#
+# for date_time in os.listdir(image_location):
+#     f = drive.CreateFile({'title': date_time})
+#     f.SetContentFile(os.path.join(image_location, date_time))
+#     f.Upload()
+
+# time.sleep(3)
+# os.remove(file_location_name)
+
+# folder_id = '1fSu1Ca8N-xagYnQG1evMR160l9h2YRfh'
+# file_metadata = {
+#     'name': 'photo.jpg',
+#     'parents': [folder_id]
+# }
+# media = MediaFileUpload('files/photo.jpg', mimetype='image/jpeg',resumable=True)
+# file = drive.files().create(body=file_metadata,media_body=media,fields='id').execute()
+# print('File ID: %s' % file.get('id'))
